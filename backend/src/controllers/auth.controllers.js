@@ -1,5 +1,7 @@
-const userModel = require("..models/user.model.js")
+const userModel = require("../models/user.model")
 const bcrypt = require("bcryptjs")
+const JWT = require("jsonwebtoken")
+
 
 const registerUser = async (req, res)=>{
 
@@ -15,13 +17,33 @@ const registerUser = async (req, res)=>{
         })
     }
 
-    const hashPassword = await bcrypt.hash(password, 10)
+    const hashedPassword = await bcrypt.hash(password, 10)
 
-    const newUser = userModel.create({
-        fullName, email, hashPassword
+    const newUser = await userModel.create({
+        fullName, email, password: hashedPassword
     });
-    res.status(200).json(newUser)
+
+    const token = JWT.sign({
+        id: newUser._id,
+
+    }, "c7d0a81d925b639f2bffd5fbe824ada4");
+    res.cookie("token", token)
+    res.status(200).json({
+        newUser: {
+            _id: newUser._id,
+            email: newUser.email,
+            fullName: newUser.fullName
+        },
+         message : " User registered Successfully",
+
+    })
 
 }
 
-module.exports = registerUser;
+const loginUser = async (req, res) =>{
+
+}
+module.exports = {registerUser,
+    loginUser
+
+};
