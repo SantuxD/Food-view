@@ -1,5 +1,5 @@
 const app = require("./src/app.js")
-const DB = require("./db/db.js")
+const DB = require("./src/db/db")
 
 DB();
 
