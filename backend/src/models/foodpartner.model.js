@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
+const foodPartnerSchema = new mongoose.Schema(
   {
     fullName: {
       type: String,
@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true
+      
     },
   },
   {
@@ -21,6 +21,5 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const userModel = mongoose.model("User", userSchema);
-
-module.exports = userModel;
+const foodPartnerModel = mongoose.model("foodPartner", foodPartnerSchema);
+module.exports = foodPartnerModel;
