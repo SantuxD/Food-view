@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const JWT = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
-  const { fullName, email, password } =  req.body;
+  const { fullName, email, password } = req.body;
 
   const isUserAlreadyExists = await userModel.findOne({
     email,
@@ -27,7 +27,7 @@ const registerUser = async (req, res) => {
     {
       id: newUser._id,
     },
-   process.env.JWT_SECRET
+    process.env.JWT_SECRET
   );
   res.cookie("token", token);
   res.status(200).json({
@@ -41,7 +41,7 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const { email, password } =  req.body;
+  const { email, password } = req.body;
 
   const user = await userModel.findOne({
     email,
@@ -74,4 +74,12 @@ const loginUser = async (req, res) => {
     },
   });
 };
-module.exports = { registerUser, loginUser };
+const logoutUSer =  (req, res) =>{
+      res.clearCookie("token");
+      res.status(200).json({
+        message: "User logout Successfully"
+      })
+}
+
+
+module.exports = { registerUser, loginUser, logoutUSer };
