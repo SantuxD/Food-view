@@ -134,7 +134,6 @@ const foodPartnerloginUser = async (req, res) =>{
   }
   const isPasswordValid = await bcrypt.compare(password, user.password)
   
-  console.log("user.password:", user.password);
 
 
   if(!isPasswordValid){
