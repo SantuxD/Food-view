@@ -1,5 +1,7 @@
 const foodModel = require("../models/food.models")
 const foodPartner = require("../models/foodpartner.model")
+ const {fileUpload} = require("../services/storage.service")
+const {v4: uuid} = require("uuid")
 
 const createFood = async(req, res)=>{
     try{
@@ -7,7 +9,10 @@ const createFood = async(req, res)=>{
     console.log(req.body);
     console.log(req.file)
 
-    return res.send(200).json({
+     const fileuploadResult = await fileUpload(req.file.buffer, uuid())
+    console.log(fileuploadResult)
+
+    return res.status(200).json({
         message: "Food items created"
     })
 
