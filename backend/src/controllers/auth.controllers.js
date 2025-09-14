@@ -83,7 +83,7 @@ const logoutUSer = (req, res) => {
 };
 
 const foodPartnerRegisterUser = async (req, res) => {
-  const { fullName, email, password } = req.body;
+  const { fullName,contactName, address, email, password,   } = req.body;
 
   const isexistsRegisterUser = await foodPartnerModel.findOne({
     email,
@@ -97,8 +97,12 @@ const foodPartnerRegisterUser = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await foodPartnerModel.create({
     fullName,
+    contactName,
+    address,
     email,
    password: hashedPassword,
+   
+   
   });
   const token = JWT.sign(
     {
