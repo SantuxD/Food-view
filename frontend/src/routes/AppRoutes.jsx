@@ -2,6 +2,8 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import UserRegister from "../pages/User/userRegister";
 import UserLogin from "../pages/User/userLogin";
+import FoodPartnerLogin from "../pages/Food-partner/foodPartnerLogin";
+import FoodPartnerRegister from "../pages/Food-partner/foodPartnerRegister";
 
 const AppRoutes = () => {
   return (
@@ -10,9 +12,9 @@ const AppRoutes = () => {
       <Route path="/user/login" element={<UserLogin />} />
       <Route
         path="/food-partner/register"
-        element={<h1>Food Partner register</h1>}
+        element={<FoodPartnerRegister/>}
       />
-      <Route path="/food-partner/login" element={<h1>Food Partner Login</h1>} />
+      <Route path="/food-partner/login" element={<FoodPartnerLogin/>} />
     </Routes>
   );
 };
