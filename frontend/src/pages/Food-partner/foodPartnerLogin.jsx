@@ -1,9 +1,9 @@
 import React from 'react'
 
-const foodPartnerLogin = () => {
+const FoodPartnerLogin = () => {
   return (
-    <div>foodPartnerLogin</div>
+    <div>F</div>
   )
 }
 
-export default foodPartnerLogin
+export default FoodPartnerLogin

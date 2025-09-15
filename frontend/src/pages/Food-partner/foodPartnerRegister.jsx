@@ -1,9 +1,9 @@
 import React from 'react'
 
-const foodPartnerRegister = () => {
+const FoodPartnerRegister = () => {
   return (
-    <div>foodPartnerRegister</div>
+    <div>F</div>
   )
 }
 
-export default foodPartnerRegister
+export default FoodPartnerRegister
