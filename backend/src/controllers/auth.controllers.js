@@ -37,7 +37,7 @@ const registerUser = async (req, res) => {
       email: newUser.email,
       fullName: newUser.fullName,
     },
-    message: " User registered Successfully",
+    message: "User registered Successfully🎉🎉🎉",
   });
 };
 
@@ -66,7 +66,7 @@ const loginUser = async (req, res) => {
   );
   res.cookie("token", token);
   res.status(200).json({
-    message: "User loged in Successfully",
+    message: "User logged in Successfully 🎉🎉🎉",
 
     user: {
       _id: user._id,
