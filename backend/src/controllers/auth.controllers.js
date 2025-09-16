@@ -138,7 +138,7 @@ const foodPartnerloginUser = async (req, res) =>{
    
   if(!user){
     return res.status(400).json({
-      message: "Invalid User or Password ❎ "
+      message: "Invalid User or Password ❌ "
     })
   }
   const isPasswordValid = await bcrypt.compare(password, user.password)
@@ -147,7 +147,7 @@ const foodPartnerloginUser = async (req, res) =>{
 
   if(!isPasswordValid){
      return res.status(400).json({
-      message: "Invalid User or password ❎"
+      message: "Invalid User or password ❌"
     })
   }
   const token = JWT.sign({

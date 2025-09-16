@@ -72,7 +72,7 @@ const Navbar = ({theme, setTheme}) => {
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="w-full text-left p-2 rounded-md bg-gray-200 dark:bg-gray-700"
             >
-              {theme === "dark" ? "☀ Light Mode" : "🌙 Dark Mode"}
+              {theme === "dark" ? " ☀ " : "🌙 "}
             </button>
           </div>
         )}
