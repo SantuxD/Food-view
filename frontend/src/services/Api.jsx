@@ -6,4 +6,9 @@ const api = axios.create({
   withCredentials: true, // if using cookies/sessions
 });
 
-export default api;
+// export const partnerAPi = axios.create({
+//     baseURL: "http://localhost:8000/api",
+//     withCredentials: true,
+// })
+
+ export default api;

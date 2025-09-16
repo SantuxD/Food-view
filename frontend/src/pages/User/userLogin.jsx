@@ -43,26 +43,28 @@ const UserLogin = () => {
           </h1>
           <form className="space-y-4" onSubmit={handelSubmit}>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 py-1">
                 Email
               </label>
               <input
                 className="w-full mt-1 px-4 py-2  border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 type="email"
+                id="email"
                 name="email"
                 value={formdata.email}
                 onChange={handelChange}
-                placeholder="Enter Your email"
+                placeholder=" Enter Your email "
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300"></label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 py-1">Password</label>
               <input
                 className="w-full mt-1 px-4 py-2  border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 type="password"
+                id="password"
                 name="password"
-                id={formdata.password}
+                value={formdata.password}
                 onChange={handelChange}
                 placeholder="Enter your Password"
               />
@@ -76,7 +78,7 @@ const UserLogin = () => {
             </button>
           </form>
           <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
-            New User?{" "}
+           Already have an Account?
             <Link to="/user/register" className="text-blue-600 hover:underline">
               Register here
             </Link>

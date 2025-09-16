@@ -83,7 +83,7 @@ const logoutUSer = (req, res) => {
 };
 
 const foodPartnerRegisterUser = async (req, res) => {
-  const { fullName,contactName, address, email, password,   } = req.body;
+  const { companyName,contactName,contactNumber, address, email, password,} = req.body;
 
   const isexistsRegisterUser = await foodPartnerModel.findOne({
     email,
@@ -96,8 +96,9 @@ const foodPartnerRegisterUser = async (req, res) => {
   }
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await foodPartnerModel.create({
-    fullName,
+    companyName,
     contactName,
+    contactNumber,
     address,
     email,
    password: hashedPassword,
@@ -112,13 +113,17 @@ const foodPartnerRegisterUser = async (req, res) => {
   );
   res.cookie("token", token);
   res.status(200).json({
-    message: "User Register successfully ✅",
+    message: "User Registered successfully ✅",
 
     user: {
       _id: user._id,
-      fullName: user.fullName,
+      companyName: user.companyName,
+      contactName: user.contactName,
+      contactNumber: user.contactNumber,
+      address:user.address,
       email: user.email,
-      password: user.password,
+      //password: user.password,
+
     },
   });
 };

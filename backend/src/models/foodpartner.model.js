@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const foodPartnerSchema = new mongoose.Schema(
   {
-    fullName: {
+    companyName: {
       type: String,
       required: true,
     },
@@ -10,11 +10,14 @@ const foodPartnerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    contactNumber: {
+      type: String,
+      required: true,
+    },
     address: {
       type: String,
       required: true,
     },
-
     email: {
       type: String,
       required: true,
