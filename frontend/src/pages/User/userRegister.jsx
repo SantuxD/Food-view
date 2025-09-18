@@ -27,7 +27,7 @@ const UserRegister = () => {
       });
     } catch (err) {
       console.log(err);
-      setMessage(err.response?.data?.message || "Something Went Wrong");
+      setMessage(err.response?.data?.message || "Something Went Wrong❌");
     }
   };
 
