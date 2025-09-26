@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/Api";
 
+
 const UserRegister = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -25,10 +27,13 @@ const UserRegister = () => {
         email: "",
         password: "",
       });
+      navigate("/")
+
     } catch (err) {
       console.log(err);
       setMessage(err.response?.data?.message || "Something Went Wrong❌");
     }
+
   };
 
   return (
@@ -36,7 +41,7 @@ const UserRegister = () => {
       <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-2xl p-6">
 
         {message && (
-          <p className= "mb-4 p-3 text-center rounded-lg bg-green-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
+          <p className="mb-4 p-3 text-center rounded-lg bg-green-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
             {message}
           </p>
         )}
@@ -101,12 +106,12 @@ const UserRegister = () => {
         </form>
         <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
           Already have an account?
-           <Link to="/user/login" className="text-blue-600 hover:underline gap-4">
-             login
+          <Link to="/user/login" className="text-blue-600 hover:underline gap-4">
+            login
           </Link>
         </p>
 
-        
+
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import api from '../../services/Api';
 
 const FoodPartnerLogin = () => {
+  const navigate = useNavigate();
 
    const [formData, setFormData] = useState({
      
@@ -24,6 +25,7 @@ const FoodPartnerLogin = () => {
           email: "",
           password: "",
         });
+        navigate("/create-food")
       } catch (err) {
         console.log(err);
         setMessage(err.response?.data?.message || "Something Went Wrong");
