@@ -3,6 +3,7 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import AppRoutes from "./routes/AppRoutes";
 
+
 function App() {
   const [theme, setTheme] = useState("light");
    useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
     <main className="p-4">
       <AppRoutes />
        </main>
+   
      </div>
     </>
   );

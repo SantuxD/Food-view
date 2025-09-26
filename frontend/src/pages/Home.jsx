@@ -78,6 +78,7 @@ const Home = () => {
             autoPlay
             loop
             muted
+            preload = "metadata"
           />
 
           {/* Overlay for description + button */}
