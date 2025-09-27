@@ -1,75 +1,43 @@
-import React from "react";
 
-function PartnerProfile() {
-    const videos = new Array(9).fill(0).map((_, i) => ({ id: i + 1 }));
+import React from 'react'
 
+
+const PartnerProfile = () => {
     return (
-        <div className="min-h-screen bg-neutral-900 flex items-center justify-center p-6">
-            <div className="w-[360px] bg-white rounded-lg shadow-2xl overflow-hidden border-2 border-pink-500">
-                {/* Top card */}
-                <div className="px-5 pt-5 pb-6 bg-pink-400 text-white">
-                    <div className="flex gap-4 items-start">
-                        <div className="w-20 h-20 rounded-full bg-green-700 shadow-inner flex-shrink-0" />
-
-                        <div className="flex-1">
-                            <div className="mb-2">
-                                <div className="inline-block bg-green-700 px-4 py-2 rounded-lg font-semibold text-white text-sm">
-                                    bussiness name
-                                </div>
-                            </div>
-                            <div>
-                                <div className="inline-block bg-green-700 px-4 py-2 rounded-lg font-medium text-white text-sm">
-                                    Address
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="mt-6 border-t border-white/30 pt-4">
-                        <div className="flex gap-4">
-                            <div className="flex-1">
-                                <div className="text-xs uppercase text-white/90 font-medium mb-2">total meals</div>
-                                <div className="inline-block bg-pink-300/40 px-3 py-2 rounded-md text-center font-bold text-white">43</div>
-                            </div>
-
-                            <div className="flex-1">
-                                <div className="text-xs uppercase text-white/90 font-medium mb-2">customer serve</div>
-                                <div className="inline-block bg-pink-300/40 px-3 py-2 rounded-md text-center font-bold text-white">15K</div>
-                            </div>
-                        </div>
+        <div className="max-w-md w-full mx-auto mt-8 rounded-xl shadow-lg overflow-hidden  ">
+            {/* Top Section */}
+            <div className="p-6 flex flex-col items-center rounded-t-xl">
+                <div className="flex w-full gap-4 items-center mb-4 flex-col sm:flex-row">
+                    <div className="w-20 h-20 rounded-full border-4" />
+                    <div className="flex flex-col flex-1 gap-2 w-full sm:w-auto">
+                        <div className=" rounded-md px-3 py-1 font-semibold text-center">business name</div>
+                        <div className=" rounded-md px-3 py-1 font-semibold text-center">Address</div>
                     </div>
                 </div>
-
-                <div className="h-2 bg-white" />
-
-                <div className="p-3 bg-white">
-                    <div className="grid grid-cols-3 gap-2">
-                        {videos.map((v) => (
-                            <div key={v.id} className="bg-sky-700 aspect-[3/4] rounded-sm flex items-center justify-center border-2 border-white/80">
-                                <div className="text-white text-sm font-semibold tracking-wide">
-                                    <div className="border border-white/80 px-2 py-1 rounded">video</div>
-                                </div>
-                            </div>
-                        ))}
+                <div className="flex w-full justify-between mt-2 flex-col sm:flex-row gap-2">
+                    <div className="flex flex-col items-center flex-1">
+                        <div className=" rounded px-2 py-1 text-sm font-medium mb-1">total meals</div>
+                        <div className="text-2xl font-bold">43</div>
                     </div>
-
-                    <div className="mt-3 border-t border-dashed border-slate-300/40" />
-
-                    <div className="grid grid-cols-3 gap-2 mt-3">
-                        {videos.slice(0, 3).map((v) => (
-                            <div key={`b - ${v._id}`} className="bg-sky-700 aspect-[3/4] rounded-sm flex items-center justify-center border-2 border-white/80">
-                        <div className="text-white text-sm font-semibold tracking-wide">
-                            <div className="border border-white/80 px-2 py-1 rounded">video</div>
-                        </div>
+                    <div className="flex flex-col items-center flex-1">
+                        <div className=" rounded px-2 py-1 text-sm font-medium mb-1">customer serve</div>
+                        <div className="text-2xl font-bold">15K</div>
                     </div>
-            ))}
                 </div>
             </div>
-
-            <div className="h-2 bg-red-600" />
+            {/* Video Grid */}
+            <div className="grid grid-cols-3 gap-4 p-6">
+                {Array.from({ length: 9 }).map((_, idx) => (
+                    <div
+                        key={idx}
+                        className="flex items-center justify-center aspect-square  rounded-lg shadow  font-semibold text-lg border"
+                    >
+                        video
+                    </div>
+                ))}
+            </div>
         </div>
-    </div >
-  );
+    );
 }
 
-export default PartnerProfile;
+export default PartnerProfile
