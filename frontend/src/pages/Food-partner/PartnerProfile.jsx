@@ -4,7 +4,7 @@ import React from 'react'
 
 const PartnerProfile = () => {
     return (
-        <div className="max-w-md w-full mx-auto mt-8 rounded-xl shadow-lg overflow-hidden  ">
+        <div className="max-w-md w-full mx-auto mt-8 rounded-xl shadow-lg overflow-hidden">
             {/* Top Section */}
             <div className="p-6 flex flex-col items-center rounded-t-xl">
                 <div className="flex w-full gap-4 items-center mb-4 flex-col sm:flex-row">
