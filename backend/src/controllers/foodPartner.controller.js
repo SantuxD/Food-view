@@ -16,4 +16,4 @@ const getFoodPartnerById = async(req, res) =>{
 
 }
 
-module.exports = getFoodPartnerById;
+module.exports = {getFoodPartnerById};
