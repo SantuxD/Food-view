@@ -6,14 +6,24 @@ import { useParams } from 'react-router-dom';
 const PartnerProfile = () => {
     const { id } = useParams();
     const [profile, setProfile] = React.useState(null);
+    const [videos, setVideos] = React.useState([]);
     React.useEffect(() => {
         // Fetch profile data using the id
-        api.get(`/food-partner/${id}`).then(response => setProfile(response.data.foodPartner)).catch(err => console.log(err));
-    }, [id]);
+        api.get(`/food-partner/${id}`)
+            .then(response => {
+                setProfile(response.data.foodPartner)
+                setVideos(response.data.foodPartner.foodItems || []);
 
-    if (!profile) {
-        return <div>Loading...</div>;
-    }
+            })
+            .catch(error => {
+                console.error("Error fetching profile data:", error);
+            });
+
+
+
+    }, [id])
+
+
     return (
         <div className="max-w-md w-full mx-auto mt-8 rounded-xl shadow-lg overflow-hidden">
             {/* Top Section */}
