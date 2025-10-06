@@ -5,7 +5,7 @@ const getFoodPartnerById = async(req, res) =>{
     const foodPartnerId = req.params.id ;
 
     const foodPartner = await foodPartnerModel.findById(foodPartnerId)
-    const foods = await foodModel.find({foodPartner: foodPartnerId})
+    const foods = await foodModel.find({foodpartner: foodPartnerId})
 
     if(!foodPartner){
         return res.status(404).json({

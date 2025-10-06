@@ -5,42 +5,42 @@ import api from '../../services/Api';
 const FoodPartnerLogin = () => {
   const navigate = useNavigate();
 
-   const [formData, setFormData] = useState({
-     
-      email: "",
-      password: "",
-    });
-    const [message, setMessage] = useState("");
-    const handelChange = (e) => {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-  
-    const handelSubmit = async (e) => {
-      e.preventDefault();
-  
-      try {
-        const res = await api.post("/auth/foodpartneruser/login", formData);
-        setMessage(res.data.message || "Registered Successfully!");
-        setFormData({
-          email: "",
-          password: "",
-        });
-        navigate("/create-food")
-      } catch (err) {
-        console.log(err);
-        setMessage(err.response?.data?.message || "Something Went Wrong");
-      }
-    };
+  const [formData, setFormData] = useState({
+
+    email: "",
+    password: "",
+  });
+  const [message, setMessage] = useState("");
+  const handelChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await api.post("/auth/foodpartneruser/login", formData);
+      setMessage(res.data.message || "Registered Successfully!");
+      setFormData({
+        email: "",
+        password: "",
+      });
+      navigate("/create-food")
+    } catch (err) {
+      console.log(err);
+      setMessage(err.response?.data?.message || "Something Went Wrong");
+    }
+  };
   return (
-   <>
-   <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900 ">
+    <>
+      <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900 ">
         <div className="w-full max-w-md p-6 bg-white dark:bg-gray-800 shadow-md rounded-2xl">
 
-           {message && (
-          <p className= "mb-4 p-3 text-center rounded-lg bg-green-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
-            {message}
-          </p>
-        )}
+          {message && (
+            <p className="mb-4 p-3 text-center rounded-lg bg-green-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
+              {message}
+            </p>
+          )}
 
 
           <h1 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white ">
@@ -86,7 +86,7 @@ const FoodPartnerLogin = () => {
           </p>
         </div>
       </div>
-   </>
+    </>
   )
 }
 

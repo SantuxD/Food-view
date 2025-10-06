@@ -22,41 +22,87 @@ const PartnerProfile = () => {
 
 
     }, [id])
+    if (!profile) return <div className="text-center mt-10">Loading...</div>;
 
 
     return (
-        <div className="max-w-md w-full mx-auto mt-8 rounded-xl shadow-lg overflow-hidden">
-            {/* Top Section */}
-            <div className="p-6 flex flex-col items-center rounded-t-xl">
-                <div className="flex w-full gap-4 items-center mb-4 flex-col sm:flex-row">
-                    <div className="w-20 h-20 rounded-full border-4" />
-                    <div className="flex flex-col flex-1 gap-2 w-full sm:w-auto">
-                        <div className=" rounded-md px-3 py-1 font-semibold text-center">{profile?.
-                            companyName}</div>
-                        <div className=" rounded-md px-3 py-1 font-semibold text-center">{profile?.address}</div>
-                    </div>
+        <div className="min-h-screen bg-gray-50 text-gray-800">
+            {/* ---- Profile Header ---- */}
+            <div className="max-w-4xl mx-auto p-6 flex flex-col sm:flex-row items-center sm:items-start gap-8 border-b border-gray-200">
+                {/* Profile Picture */}
+                <div className="flex-shrink-0">
+                    <img
+                        src={profile.image || "https://www.google.com/imgres?q=man&imgurl=https%3A%2F%2Fmedia.istockphoto.com%2Fid%2F1445597021%2Fphoto%2Fblack-man-phone-and-social-media-in-city-reading-text-message-or-communication-on-social.jpg%3Fs%3D612x612%26w%3D0%26k%3D20%26c%3DB7pEc-0pgtUw33hz9P5-row1Go3YwwHacUJrE-lCNgA%3D&imgrefurl=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fhe-man%3Fpage%3D2&docid=tPOGSO0XyxEVvM&tbnid=IcQ0Wuc7Eo_hKM&vet=12ahUKEwjunJqFgZCQAxWHbmwGHcUhFGcQM3oECCUQAA..i&w=612&h=408&hcb=2&ved=2ahUKEwjunJqFgZCQAxWHbmwGHcUhFGcQM3oECCUQAA"} // add image field or default placeholder
+                        alt={profile.companyName}
+                        className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-gray-300"
+                    />
                 </div>
-                <div className="flex w-full justify-between mt-2 flex-col sm:flex-row gap-2">
-                    <div className="flex flex-col items-center flex-1">
-                        <div className=" rounded px-2 py-1 text-sm font-medium mb-1">total meals</div>
-                        <div className="text-2xl font-bold">{profile?.totalMeals}</div>
+
+                {/* Partner Details */}
+                <div className="flex flex-col sm:flex-1 gap-3 text-center sm:text-left">
+                    <div className="text-2xl font-bold">{profile.companyName}</div>
+                    <div className="text-gray-500">{profile.address}</div>
+
+                    {/* Stats Section */}
+                    <div className="flex justify-center sm:justify-start gap-8 mt-2">
+                        <div className="flex flex-col items-center">
+                            <span className="font-semibold text-lg">{profile.totalMeals}</span>
+                            <span className="text-sm text-gray-500">Meals</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <span className="font-semibold text-lg">
+                                {profile.customersServed}
+                            </span>
+                            <span className="text-sm text-gray-500">Customers</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <span className="font-semibold text-lg">{videos.length}</span>
+                            <span className="text-sm text-gray-500">Videos</span>
+                        </div>
                     </div>
-                    <div className="flex flex-col items-center flex-1">
-                        <div className=" rounded px-2 py-1 text-sm font-medium mb-1">customer served</div>
-                        <div className="text-2xl font-bold">{profile?.customersServed}</div>
-                    </div>
+
+                    {/* Description / Bio */}
+                    <p className="mt-3 text-gray-600">
+                        {profile.description || "Welcome to our food service partner page!"}
+                    </p>
                 </div>
             </div>
-            {/* Video Grid */}
-            <div className="grid grid-cols-3 gap-4 p-6">
-                {Array.from({ length: 9 }).map((_, idx) => (
-                    <div
-                        key={idx}
-                        className="flex items-center justify-center aspect-square  rounded-lg shadow  font-semibold text-lg border"
-                    >
-                        video
+
+            {/* ---- Videos Section ---- */}
+            <div className="max-w-5xl mx-auto p-4">
+                <h2 className="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">
+                    Videos
+                </h2>
+
+                {videos.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {videos.map((video) => (
+                            <div
+                                key={video._id}
+                                className="relative group bg-white rounded-lg shadow-sm overflow-hidden"
+                            >
+                                <video
+                                    src={video.video}
+                                    controls
+                                    muted
+                                    className="w-full h-64 object-cover"
+                                />
+                                <div className="p-2 text-center text-sm font-medium text-gray-700">
+                                    {video.name}
+                                </div>
+
+                                {/* Hover overlay (like Instagram hover) */}
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white font-semibold text-lg transition-opacity">
+                                    ▶ Play
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                ) : (
+                    <div className="text-center text-gray-500 mt-10">
+                        No videos uploaded yet.
+                    </div>
+                )}
             </div>
         </div>
     );

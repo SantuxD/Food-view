@@ -78,8 +78,9 @@ const Home = () => {
             autoPlay
             loop
             muted
-            preload = "metadata"
+            // preload = "metadata"
           />
+           {/* <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" /> */}
 
           {/* Overlay for description + button */}
           <div className="absolute bottom-10 w-full px-6 flex flex-col items-center space-y-3">
