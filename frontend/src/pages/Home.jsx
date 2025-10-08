@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import api from "../services/Api";
 import { Link } from "react-router-dom";
+import { FaRegHeart, FaHeart, FaRegBookmark, FaBookmark } from "react-icons/fa";
 
 // const videos = [
 //   {
@@ -56,12 +57,24 @@ const Home = () => {
     if (newIndex !== activeIndex) setActiveIndex(newIndex);
   };
 
+  const toggleLike = (id) => {
+    setLikedVideos((prev) =>
+      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
+    );
+  };
+
+  const toggleSave = (id) => {
+    setSavedVideos((prev) =>
+      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
+    );
+  };
+
 
   return (
     <div className="h-screen w-full overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
-     onScroll = {handleScroll}
+      onScroll={handleScroll}
     >
-     
+
       {videos.map((video, index) => (
         <motion.div
           key={video._id}
@@ -78,9 +91,33 @@ const Home = () => {
             autoPlay
             loop
             muted
-            // preload = "metadata"
+          // preload = "metadata"
           />
-           {/* <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" /> */}
+
+          {/* Action Buttons (Like + Save) */}
+          <div className="absolute right-6 bottom-24 flex flex-col space-y-6 items-center z-20">
+            <button
+              onClick={() => toggleLike(video._id)}
+              className="focus:outline-none"
+            >
+              {likedVideos.includes(video._id) ? (
+                <FaHeart className="text-red-500 text-3xl hover:scale-110 transition" />
+              ) : (
+                <FaRegHeart className="text-white text-3xl hover:scale-110 transition" />
+              )}
+            </button>
+
+            <button
+              onClick={() => toggleSave(video._id)}
+              className="focus:outline-none"
+            >
+              {savedVideos.includes(video._id) ? (
+                <FaBookmark className="text-yellow-400 text-3xl hover:scale-110 transition" />
+              ) : (
+                <FaRegBookmark className="text-white text-3xl hover:scale-110 transition" />
+              )}
+            </button>
+          </div>
 
           {/* Overlay for description + button */}
           <div className="absolute bottom-10 w-full px-6 flex flex-col items-center space-y-3">

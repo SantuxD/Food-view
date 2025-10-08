@@ -2,7 +2,7 @@ const foodModel = require("../models/food.models");
 const foodPartner = require("../models/foodpartner.model");
 const { fileUpload } = require("../services/storage.service");
 const likesModel = require("../models/likes.model");
-const savedFoodModel = require("../models/savedFood.model");
+const savedFoodModel = require("../models/save.model");
 const { v4: uuid } = require("uuid");
 
 const createFood = async (req, res) => {
@@ -36,59 +36,64 @@ const getFoodItem = async (req, res) => {
 };
 
 const likeFoodItem = async (req, res) => {
-  const foodId = req.params.id;
-  const userId = req.user._id;
-  try {
-    const foodItem = await foodModel.findById(foodId);
-    if (!foodItem) {
-      return res.status(404).json({ message: "Food item not found" });
-    }
-    // Check if the user has already liked the food item
-    const alreadyLiked = foodItem.likesModel.includes(userId);
-    if (alreadyLiked) {
-      return res
-        .status(400)
-        .json({ message: "You have already liked this food item" });
-    }
+  const { foodId } = req.body;
+  const userId = req.user;
 
-    foodItem.likeCount += 1;
-    foodItem.likesModel.push(userId);
+  const alreadyLiked = await likesModel.findOne({
+    food: foodId,
+    user: user._id,
+  });
 
-    await foodItem.save();
+  if (alreadyLiked) {
+    await likesModel.deleteOne({
+      food: foodId,
+      user: userId,
+    });
+    await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: -1 } });
 
     return res
       .status(200)
-      .json({ message: "Food item liked successfully", foodItem });
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
+      .json({ message: "You have already liked this food item" });
   }
+  const like = await likesModel.create({
+    food: foodId,
+    user: user._id,
+  });
+
+  await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: 1 } });
+
+  return res
+    .status(200)
+    .json({ message: "Food item liked successfully", like });
 };
 
 const saveFoodItem = async (req, res) => {
   const { foodId } = req.body;
   const userId = req.user._id;
-  try {
-    const foodItem = await foodModel.findById(foodId);
-    if (!foodItem) {
-      return res.status(404).json({ message: "Food item not found" });
-    }
-    const user = req.user;
-    if (user.savedFoodModel.includes(foodId)) {
-      return res
-        .status(400)
-        .json({ message: "You have already saved this food item" });
-    }
-    user.savedFoodModel.push(foodId);
-    await user.save();
+  
+  const alreadySaved = await savedFoodModel.findOne({
+    food: foodId,
+    user: userId,
+  });
 
+  if (alreadySaved) {
+    await savedFoodModel.deleteOne({
+      food: foodId,
+      user: userId,
+    });
     return res
-      .status(200)
-      .json({ message: "Food item saved successfully", foodItem });
+      .status(400)
+      .json({ message: "You have already saved this food item" });
   }
-  catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-};
 
+  const savedFood = await savedFoodModel.create({
+    food: foodId,
+    user: userId,
+  });
+  return res
+    .status(200)
+    .json({ message: "Food item saved successfully", savedFood });
+    
+};
 
 module.exports = { createFood, getFoodItem, likeFoodItem, saveFoodItem };
