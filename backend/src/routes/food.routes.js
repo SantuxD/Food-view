@@ -17,6 +17,11 @@ route.post("/", authMiddleware.authFoodPartnerMiddleware, upload.single("video")
 route.get("/",authMiddleware.authUserMiddleware,foodController.getFoodItem )
 
 
+route.post("/:id/like",authMiddleware.authUserMiddleware,foodController.likeFoodItem )
+
+route.post("/save",authMiddleware.authUserMiddleware,foodController.saveFoodItem )
+
+
 
 
 
