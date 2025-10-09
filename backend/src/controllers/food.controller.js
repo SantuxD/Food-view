@@ -36,58 +36,84 @@ const getFoodItem = async (req, res) => {
 };
 
 const likeFoodItem = async (req, res) => {
-  const { foodId } = req.body;
-  const userId = req.user;
+  const { foodItemId } = req.body;
+  const userId = req.user._id;
 
-  const alreadyLiked = await likesModel.findOne({
-    food: foodId,
-    user: user._id,
-  });
+   const foodItem = await foodModel.findById(foodItemId);
 
-  if (alreadyLiked) {
-    await likesModel.deleteOne({
-      food: foodId,
-      user: userId,
-    });
-    await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: -1 } });
+   
+  if (!foodItem) return res.status(404).json({ message: "Food not found" });
 
-    return res
-      .status(200)
-      .json({ message: "You have already liked this food item" });
+  const liked = foodItem.likes.includes(userId);
+
+  if (liked) {
+    foodItem.likes.pull(userId);
+    foodItem.likeCount -= 1;
+  } else {
+    foodItem.likes.push(userId);
+    foodItem.likeCount += 1;
   }
-  const like = await likesModel.create({
-    food: foodId,
-    user: user._id,
-  });
 
-  await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: 1 } });
+   await foodItem.save();
 
-  return res
-    .status(200)
-    .json({ message: "Food item liked successfully", like });
+  res.json({ message: liked ? "Unliked" : "Liked", likeCount: foodItem.likeCount });
 };
 
+
+
+//   const alreadyLiked = await likesModel.findOne({
+//     foodItem: foodItemId,
+//     user: userId,
+//   });
+
+//   if (alreadyLiked) {
+//     await likesModel.deleteOne({
+//       foodItem: foodItemId,
+//       user: userId,
+//     });
+//     await foodModel.findByIdAndUpdate(foodItemId, { $inc: { likeCount: -1 } });
+
+//     return res
+//       .status(200)
+//       .json({ message: "Like removed Successfully" });
+//   }
+//   const like = await likesModel.create({
+//     foodItem: foodItemId,
+//     user: userId,
+//   });
+
+//   await foodModel.findByIdAndUpdate(foodItemId, { $inc: { likeCount: 1 } });
+
+//   return res
+//     .status(200)
+//     .json({ message: "Food item liked successfully", like });
+// };
+
 const saveFoodItem = async (req, res) => {
-  const { foodId } = req.body;
+  const { foodItemId } = req.body;
   const userId = req.user._id;
+
+  if (!userId) {
+      return res.status(401).json({ message: "Unauthorized: No user found" });
+    }
   
   const alreadySaved = await savedFoodModel.findOne({
-    food: foodId,
+    foodItem: foodItemId,
     user: userId,
   });
 
   if (alreadySaved) {
     await savedFoodModel.deleteOne({
-      food: foodId,
+      foodItem: foodItemId,
       user: userId,
     });
     return res
-      .status(400)
-      .json({ message: "You have already saved this food item" });
+      .status(200)
+      .json({ message: "You have already saved this food item", });
   }
 
   const savedFood = await savedFoodModel.create({
-    food: foodId,
+    foodItem: foodItemId,
     user: userId,
   });
   return res
