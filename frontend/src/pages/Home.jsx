@@ -11,26 +11,6 @@ import {
   FaRegComment,
 } from "react-icons/fa";
 
-// const videos = [
-//   {
-//     id: 1,
-//     src: "https://ik.imagekit.io/Hellokitty/9ffa7f5f-4e49-4c8c-9dfe-3d1a876f3019_sboUI2j61a",
-//     description: "This is the first product video with a short description.",
-//     storeUrl: "/store/1",
-//   },
-//   {
-//     id: 2,
-//     src: "https://www.w3schools.com/html/movie.mp4",
-//     description: "Second video showcasing amazing food from our partner.",
-//     storeUrl: "/store/2",
-//   },
-//   {
-//     id: 3,
-//     src: "https://www.w3schools.com/html/mov_bbb.mp4",
-//     description: "Another cool product video, check it out now!",
-//     storeUrl: "/store/3",
-//   },
-// ];
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
@@ -40,14 +20,14 @@ const Home = () => {
   const videoRefs = useRef([]);
 
   useEffect(() => {
-   const res =  api.get("/food").then((response) => {
+    api.get("/food").then((response) => {
       setVideos(response.data.foodItems);
 
-      const userLiked = res.data.foodItems
-        .filter(video => video.likes.includes(currentUserId))
-        .map(video => video._id);
+      //   const userLiked = response.data.foodItems
+      //     .filter(video => video.likes.includes(currentUser._id))
+      //     .map(video => video._id);
 
-      setLikedVideos(userLiked);
+      //   setLikedVideos(userLiked);
     });
   }, []);
 
@@ -93,27 +73,23 @@ const Home = () => {
 
   const toggleSave = async (videoId) => {
     try {
-      const isSaved = savedVideos.includes(videoId);
-      await api.post("/food/save", { foodItemId: videoId });
+      const res = await api.post("/food/save", { foodItemId: videoId });
 
-      setSavedVideos(
-        isSaved
-          ? savedVideos.filter((id) => id !== videoId)
-          : [...savedVideos, videoId]
+      setVideos((prevVideos) =>
+        prevVideos.map((video) =>
+          video._id === videoId
+            ? { ...video, saveCount: res.data.saveCount }
+            : video
+        )
       );
-      setVideos(
-        videos.map((video) => {
-          if (video._id === videoId) {
-            return {
-              ...video,
-              saveCount: isSaved ? video.saveCount - 1 : video.saveCount + 1,
-            };
-          }
-          return video;
-        })
-      );
+
+      if (res.data.isSaved) {
+        setSavedVideos((prev) => [...prev, videoId]);
+      } else {
+        setSavedVideos((prev) => prev.filter((id) => id !== videoId));
+      }
     } catch (error) {
-      console.error("Error saving video:", error);
+      console.error("Error toggling save:", error);
     }
   };
 
@@ -186,7 +162,9 @@ const Home = () => {
                   <FaRegBookmark className="text-white text-3xl hover:scale-110 transition" />
                 )}
               </button>
+              <span className="text-white text-sm">{video.saveCount || 0}</span>
             </div>
+
 
             {/* Comment */}
             <div className="flex flex-col items-center">
