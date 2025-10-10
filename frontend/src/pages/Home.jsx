@@ -22,12 +22,6 @@ const Home = () => {
   useEffect(() => {
     api.get("/food").then((response) => {
       setVideos(response.data.foodItems);
-
-      //   const userLiked = response.data.foodItems
-      //     .filter(video => video.likes.includes(currentUser._id))
-      //     .map(video => video._id);
-
-      //   setLikedVideos(userLiked);
     });
   }, []);
 
